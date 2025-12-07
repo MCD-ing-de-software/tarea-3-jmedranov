@@ -135,7 +135,7 @@ class TestStatisticsUtils(unittest.TestCase):
         - Crear una lista con todos los valores iguales (ej: [5, 5, 5])
         - Llamar a zscore con esa secuencia y verificar que se lanza un ValueError indicando que la desviación estándar es cero (usar self.assertRaises)
         """
-        
+
         ## Crear una lista con todos los valores iguales (ej: [5, 5, 5])
         v = [5, 5, 5]
         ## Llamar a zscore con esa secuencia y verificar que se lanza un ValueError indicando que la desviación estándar es cero (usar self.assertRaises)
@@ -154,6 +154,19 @@ class TestStatisticsUtils(unittest.TestCase):
         - Verificar que el valor máximo del resultado es 1.0 (usar self.assertAlmostEqual para un solo valor numérico - unittest es suficiente)
         - Verificar que los valores transformados son correctos (ej: [0.0, 0.5, 1.0] para [2, 4, 6]) (usar numpy.testing.assert_allclose() para comparar el array completo - esto es necesario para comparar arrays de NumPy con tolerancia para errores de punto flotante)
         """
+
+        ## Crear una lista de números (ej: [2, 4, 6])
+        v = [2, 4, 6]
+        ## Llamar a min_max_scale para obtener los valores escalados (resultado es un array de NumPy)
+        x = StatisticsUtils()
+        w = x.min_max_scale(v)
+        ## Verificar que el valor mínimo del resultado es 0.0 (usar self.assertAlmostEqual para un solo valor numérico - unittest es suficiente)
+        self.assertAlmostEqual(np.min(w), 0)
+        ## Verificar que el valor máximo del resultado es 1.0 (usar self.assertAlmostEqual para un solo valor numérico - unittest es suficiente)
+        self.assertAlmostEqual(np.max(w), 1)
+        ## Verificar que los valores transformados son correctos (ej: [0.0, 0.5, 1.0] para [2, 4, 6]) (usar numpy.testing.assert_allclose() para comparar el array completo - esto es necesario para comparar arrays de NumPy con tolerancia para errores de punto flotante)
+        np.testing.assert_allclose(w, [0.0, 0.5, 1.0])
+
 
     def test_min_max_scale_raises_for_constant_values(self):
         """Test que verifica que el método min_max_scale lanza un ValueError cuando
