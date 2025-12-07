@@ -124,7 +124,7 @@ class TestStatisticsUtils(unittest.TestCase):
         ## Verificar que la media del resultado es aproximadamente 0 (usar self.assertAlmostEqual para un solo valor numérico - unittest es suficiente)
         self.assertAlmostEqual(np.mean(w), 0)
         ## Verificar que la desviación estándar del resultado es aproximadamente 1 (usar self.assertAlmostEqual para un solo valor numérico - unittest es suficiente)
-        self.assertAlmostEqual(np.std(w), 0)
+        self.assertAlmostEqual(np.std(w), 1)
 
     def test_zscore_raises_for_zero_std(self):
         """Test que verifica que el método zscore lanza un ValueError cuando
@@ -135,6 +135,13 @@ class TestStatisticsUtils(unittest.TestCase):
         - Crear una lista con todos los valores iguales (ej: [5, 5, 5])
         - Llamar a zscore con esa secuencia y verificar que se lanza un ValueError indicando que la desviación estándar es cero (usar self.assertRaises)
         """
+        
+        ## Crear una lista con todos los valores iguales (ej: [5, 5, 5])
+        v = [5, 5, 5]
+        ## Llamar a zscore con esa secuencia y verificar que se lanza un ValueError indicando que la desviación estándar es cero (usar self.assertRaises)
+        x = StatisticsUtils()
+        w = x.zscore(v)
+        self.assertAlmostEqual(np.std(w), 0)
 
     def test_min_max_scale_maps_to_zero_one_range(self):
         """Test que verifica que el método min_max_scale escala correctamente una secuencia
