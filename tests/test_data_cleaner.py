@@ -201,7 +201,12 @@ class TestDataCleaner(unittest.TestCase):
         - Llamar a remove_outliers_iqr con una columna de texto (ej: "city")
         - Verificar que se lanza un TypeError (usar self.assertRaises)
         """
-
+        ## Crear un DataFrame usando make_sample_df()
+        df = make_sample_df()
+        ## Llamar a remove_outliers_iqr con una columna de texto (ej: "city")
+        ## Verificar que se lanza un TypeError (usar self.assertRaises)
+        x = DataCleaner()
+        self.assertRaises(x.remove_outliers_iqr(df, col = ["city"]))
 
 if __name__ == "__main__":
     unittest.main()
