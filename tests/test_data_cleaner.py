@@ -108,7 +108,8 @@ class TestDataCleaner(unittest.TestCase):
         ## Llamar a drop_invalid_rows con una columna que no existe (ej: "does_not_exist")
         ## Verificar que se lanza un KeyError (usar self.assertRaises)
         z  = DataCleaner()
-        self.assertRaises(z.drop_invalid_rows(df, ["does_not_exist"]))
+        with self.assertRaises(KeyError):
+            z.drop_invalid_rows(df, ["does_not_exist"])
 
     def test_trim_strings_strips_whitespace_without_changing_other_columns(self):
         """Test que verifica que el método trim_strings elimina correctamente los espacios
@@ -150,7 +151,8 @@ class TestDataCleaner(unittest.TestCase):
         ## Llamar a trim_strings con una columna numérica (ej: "age")
         ## Verificar que se lanza un TypeError (usar self.assertRaises)
         x = DataCleaner()
-        self.assertRaises(x.trim_strings(df, ["name"]))
+        with self.assertRaises(TypeError):
+            x.trim_strings(df, ["name"])
 
 
     def test_remove_outliers_iqr_removes_extreme_values(self):
@@ -190,7 +192,8 @@ class TestDataCleaner(unittest.TestCase):
         ## Llamar a remove_outliers_iqr con una columna que no existe (ej: "salary")
         ## Verificar que se lanza un KeyError (usar self.assertRaises)
         x = DataCleaner()
-        self.assertRaises(x.remove_outliers_iqr(df, col = ["salary"]))
+        with self.assertRaises(KeyError):
+            x.remove_outliers_iqr(df, col = ["salary"])
 
     def test_remove_outliers_iqr_raises_typeerror_for_non_numeric_column(self):
         """Test que verifica que el método remove_outliers_iqr lanza un TypeError cuando
@@ -206,7 +209,8 @@ class TestDataCleaner(unittest.TestCase):
         ## Llamar a remove_outliers_iqr con una columna de texto (ej: "city")
         ## Verificar que se lanza un TypeError (usar self.assertRaises)
         x = DataCleaner()
-        self.assertRaises(x.remove_outliers_iqr(df, col = ["city"]))
+        with self.assertRaises(TypeError):
+            x.remove_outliers_iqr(df, col = ["city"])
 
 if __name__ == "__main__":
     unittest.main()
