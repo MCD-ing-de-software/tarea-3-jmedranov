@@ -85,9 +85,11 @@ class TestStatisticsUtils(unittest.TestCase):
         ## Llamar a moving_average con window=0 (valor no positivo) y verificar que se lanza un ValueError (usar self.assertRaises)
         x = StatisticsUtils()
         ## Llamar a moving_average con window=0 (valor no positivo) y verificar que se lanza un ValueError (usar self.assertRaises)
-        self.assertRaises(x.moving_average(v, 0))
+        with self.assertRaises(ValueError):
+            x.moving_average(v, 0)
         ## Llamar a moving_average con window mayor que la longitud del array y verificar que se lanza un ValueError (usar self.assertRaises)
-        self.assertRaises(x.moving_average(v, 4))
+        with self.assertRaises(ValueError):
+            x.moving_average(v, 4)
 
     def test_moving_average_only_accepts_1d_sequences(self):
         """Test que verifica que el método moving_average lanza un ValueError cuando
@@ -102,7 +104,8 @@ class TestStatisticsUtils(unittest.TestCase):
         v = [[1, 2], [3, 4]]
         ## Llamar a moving_average con esa secuencia y verificar que se lanza un ValueError indicando que solo se aceptan secuencias 1D (usar self.assertRaises)
         x = StatisticsUtils()
-        self.assertRaises(x.moving_average(v, [[1, 1]]))
+        with self.assertRaises(ValueError):
+            x.moving_average(v, [1])
 
     def test_zscore_has_mean_zero_and_unit_std(self):
         """Test que verifica que el método zscore calcula correctamente los z-scores
@@ -181,8 +184,8 @@ class TestStatisticsUtils(unittest.TestCase):
         v = [3, 3, 3]
         ## Llamar a min_max_scale con esa secuencia y verificar que se lanza un ValueError indicando que todos los valores son iguales (usar self.assertRaises)
         x = StatisticsUtils()
-        w = x.min_max_scale(v)
-        self.assertRaises(w)
+        with self.assertRaises(ValueError):
+            x.min_max_scale(v)
 
 if __name__ == "__main__":
     unittest.main()
